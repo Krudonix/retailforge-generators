@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<EnforceExtendedAnalyzerRules>True</EnforceExtendedAnalyzerRules>
+		<Version>0.0.3</Version>
+
+		<IsPackable>true</IsPackable>
+		<PackageId>RetailForge.Generators</PackageId>
+		<!-- Generator DLL must not go in lib/ — it lives in analyzers/dotnet/cs/ -->
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<NoWarn>$(NoWarn);NU5128</NoWarn>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<!-- OutputItemType=Analyzer wires the DLL up for local builds.
+		     ReferenceOutputAssembly=false because the generator references Abstractions
+		     only by metadata name string, not as a C# type.
+		     No PrivateAssets so NuGet emits a dependency on RetailForge.Generators.Abstractions,
+		     giving consumers the attribute automatically. -->
+		<ProjectReference Include="..\RetailForge.Generators.Abstractions\RetailForge.Generators.Abstractions.csproj"
+		                  OutputItemType="Analyzer"
+		                  ReferenceOutputAssembly="false" />
+	</ItemGroup>
+	<ItemGroup>
+		<!-- Place the generator DLL in the correct analyzers path inside the .nupkg -->
+		<None Include="$(OutputPath)\$(AssemblyName).dll"
+		      Pack="true"
+		      PackagePath="analyzers/dotnet/cs"
+		      Visible="false" />
+	</ItemGroup>
+</Project>

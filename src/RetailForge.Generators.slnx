@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="RetailForge.Generators.Abstractions/RetailForge.Generators.Abstractions.csproj" />
+  <Project Path="RetailForge.Generators/RetailForge.Generators.csproj" />
+  <Project Path="RetailForge.Generators.TestConsole/RetailForge.Generators.TestConsole.csproj" />
+</Solution>
